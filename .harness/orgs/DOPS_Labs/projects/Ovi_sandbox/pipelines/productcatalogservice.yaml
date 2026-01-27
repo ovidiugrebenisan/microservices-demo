@@ -7,6 +7,20 @@ pipeline:
     versionLabel: "1"
     gitBranch: main
     templateInputs:
+      stages:
+        - stage:
+            identifier: Build
+            type: CI
+            spec:
+              execution:
+                steps:
+                  - step:
+                      identifier: Build_and_Upload_Container
+                      template:
+                        templateInputs:
+                          type: BuildAndPushECR
+                          spec:
+                            tags: <+input>
       properties:
         ci:
           codebase:
