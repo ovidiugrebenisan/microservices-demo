@@ -21,7 +21,7 @@ inputSet:
                             type: BuildAndPushECR
                             spec:
                               tags:
-                                - <+codebase.branch> + "-" + <+codebase.shortCommitSha>
+                                - <+ <+codebase.branch> + "-" + <+codebase.shortCommitSha> >
         properties:
           ci:
             codebase:
