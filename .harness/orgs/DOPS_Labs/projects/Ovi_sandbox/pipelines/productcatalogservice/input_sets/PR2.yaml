@@ -1,0 +1,33 @@
+inputSet:
+  name: PR2
+  identifier: PR2
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservice
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Build_Scan_Push
+              template:
+                templateInputs:
+                  type: CI
+                  spec:
+                    execution:
+                      steps:
+                        - stepGroup:
+                            identifier: BuildScanPush
+                            template:
+                              templateInputs:
+                                variables:
+                                  - name: docker_tag
+                                    type: String
+                                    value: pr-<+trigger.prNumber>
+        properties:
+          ci:
+            codebase:
+              build:
+                type: PR
+                spec:
+                  number: <+trigger.prNumber>
