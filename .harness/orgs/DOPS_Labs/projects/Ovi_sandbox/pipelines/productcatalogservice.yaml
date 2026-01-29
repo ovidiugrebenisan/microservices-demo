@@ -9,18 +9,21 @@ pipeline:
     templateInputs:
       stages:
         - stage:
-            identifier: Build
-            type: CI
-            spec:
-              execution:
-                steps:
-                  - step:
-                      identifier: Build_and_Upload_Container
-                      template:
-                        templateInputs:
-                          type: BuildAndPushECR
-                          spec:
-                            tags: <+input>
+            identifier: Build_Scan_Push
+            template:
+              templateInputs:
+                type: CI
+                spec:
+                  execution:
+                    steps:
+                      - stepGroup:
+                          identifier: BuildScanPush
+                          template:
+                            templateInputs:
+                              variables:
+                                - name: docker_tag
+                                  type: String
+                                  value: <+input>
       properties:
         ci:
           codebase:
