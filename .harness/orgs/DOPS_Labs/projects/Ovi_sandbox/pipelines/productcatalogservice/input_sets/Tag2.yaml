@@ -1,0 +1,40 @@
+inputSet:
+  name: Tag2
+  identifier: Tag2
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservice
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Build_Scan_Push
+              template:
+                templateInputs:
+                  type: CI
+                  spec:
+                    infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                        serviceAccountName: <+pipeline.name>-prod
+                    execution:
+                      steps:
+                        - stepGroup:
+                            identifier: BuildScanPush
+                            template:
+                              templateInputs:
+                                variables:
+                                  - name: docker_tag
+                                    type: String
+                                    value: <+trigger.tag>
+                                  - name: ecr_repo_name
+                                    type: String
+                                    value: <+pipeline.name>-prod
+        properties:
+          ci:
+            codebase:
+              build:
+                type: tag
+                spec:
+                  tag: <+trigger.tag>
