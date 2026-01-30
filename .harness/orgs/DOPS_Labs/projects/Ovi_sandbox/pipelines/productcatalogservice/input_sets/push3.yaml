@@ -1,0 +1,87 @@
+inputSet:
+  name: push3
+  identifier: push3
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservice
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Security_Scans
+              template:
+                templateInputs:
+                  type: SecurityTests
+                  spec:
+                    execution:
+                      steps:
+                        - parallel:
+                            - stepGroup:
+                                identifier: Scan_and_Ingest_Secrets
+                                template:
+                                  templateInputs:
+                                    steps:
+                                      - step:
+                                          identifier: GitLeaks_ingest
+                                          template:
+                                            templateInputs:
+                                              type: CustomIngest
+                                              spec:
+                                                target:
+                                                  type: repository
+                                                  variant: <+trigger.sourceBranch>
+                            - stepGroup:
+                                identifier: Semgrep
+                                template:
+                                  templateInputs:
+                                    steps:
+                                      - step:
+                                          identifier: Semgrep_Ingest
+                                          template:
+                                            templateInputs:
+                                              type: CustomIngest
+                                              spec:
+                                                target:
+                                                  type: repository
+                                                  variant: <+trigger.sourceBranch>
+          - stage:
+              identifier: Build_Scan_Push
+              template:
+                templateInputs:
+                  type: CI
+                  spec:
+                    infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                        serviceAccountName: <+pipeline.name>-sa
+                    execution:
+                      steps:
+                        - stepGroup:
+                            identifier: BuildScanPush
+                            template:
+                              templateInputs:
+                                steps:
+                                  - step:
+                                      identifier: Ingest_Trivy_Image_Scan
+                                      template:
+                                        templateInputs:
+                                          type: CustomIngest
+                                          spec:
+                                            target:
+                                              type: container
+                                              variant: <+trigger.sourceBranch>
+                                variables:
+                                  - name: docker_tag
+                                    type: String
+                                    value: <+trigger.sourceBranch>-<+codebase.shortCommitSha>
+                                  - name: ecr_repo_name
+                                    type: String
+                                    value: <+pipeline.name>
+        properties:
+          ci:
+            codebase:
+              build:
+                type: branch
+                spec:
+                  branch: <+trigger.branch>
