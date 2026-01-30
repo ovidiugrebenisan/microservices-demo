@@ -28,6 +28,9 @@ pipeline:
                                 - name: docker_tag
                                   type: String
                                   value: <+input>
+                                - name: ecr_repo_name
+                                  type: String
+                                  value: <+input>
       properties:
         ci:
           codebase:
