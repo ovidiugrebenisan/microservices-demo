@@ -1,0 +1,40 @@
+inputSet:
+  name: PR3
+  identifier: PR3
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservice
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Build_Scan_Push
+              template:
+                templateInputs:
+                  type: CI
+                  spec:
+                    infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                        serviceAccountName: <+pipeline.name>-sa
+                    execution:
+                      steps:
+                        - stepGroup:
+                            identifier: BuildScanPush
+                            template:
+                              templateInputs:
+                                variables:
+                                  - name: docker_tag
+                                    type: String
+                                    value: pr-<+trigger.prNumber>
+                                  - name: ecr_repo_name
+                                    type: String
+                                    value: <+pipeline.name>
+        properties:
+          ci:
+            codebase:
+              build:
+                type: PR
+                spec:
+                  number: <+trigger.prNumber>
