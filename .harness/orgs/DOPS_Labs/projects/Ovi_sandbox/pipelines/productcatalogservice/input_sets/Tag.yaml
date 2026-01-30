@@ -1,0 +1,33 @@
+inputSet:
+  name: Tag
+  identifier: Tag
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservice
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Build_Scan_Push
+              template:
+                templateInputs:
+                  type: CI
+                  spec:
+                    execution:
+                      steps:
+                        - stepGroup:
+                            identifier: BuildScanPush
+                            template:
+                              templateInputs:
+                                variables:
+                                  - name: docker_tag
+                                    type: String
+                                    value: <+trigger.tag>
+        properties:
+          ci:
+            codebase:
+              build:
+                type: tag
+                spec:
+                  tag: <+trigger.tag>
