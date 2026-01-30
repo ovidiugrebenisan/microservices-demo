@@ -54,7 +54,7 @@ inputSet:
                     infrastructure:
                       type: KubernetesDirect
                       spec:
-                        serviceAccountName: <+pipeline.name>-prod
+                        serviceAccountName: <+pipeline.name>-sa-prod
                     execution:
                       steps:
                         - stepGroup:
