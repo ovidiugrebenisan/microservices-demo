@@ -1,0 +1,57 @@
+pipeline:
+  name: cartservice
+  identifier: cartservice
+  projectIdentifier: Ovi_sandbox
+  orgIdentifier: DOPS_Labs
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: github
+        repoName: microservices-demo
+        build: <+input>
+        sparseCheckout:
+          - src/cartservice
+        depth: 1
+  stages:
+    - stage:
+        name: Security Scans
+        identifier: Security_Scans
+        template:
+          templateRef: Scan
+          versionLabel: "1"
+          gitBranch: main
+          templateInputs:
+            type: SecurityTests
+            spec:
+              execution:
+                steps:
+                  - parallel:
+                      - stepGroup:
+                          identifier: Scan_and_Ingest_Secrets
+                          template:
+                            templateInputs:
+                              steps:
+                                - step:
+                                    identifier: GitLeaks_ingest
+                                    template:
+                                      templateInputs:
+                                        type: CustomIngest
+                                        spec:
+                                          target:
+                                            type: repository
+                                            variant: <+input>
+                      - stepGroup:
+                          identifier: Semgrep
+                          template:
+                            templateInputs:
+                              steps:
+                                - step:
+                                    identifier: Semgrep_Ingest
+                                    template:
+                                      templateInputs:
+                                        type: CustomIngest
+                                        spec:
+                                          target:
+                                            type: repository
+                                            variant: <+input>
