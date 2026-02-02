@@ -123,22 +123,13 @@ applicationDistribution.into('bin') {
     fileMode = 0755
 }
 
-tasks.withType(com.google.protobuf.gradle.GenerateProtoTask) {
+tasks.withType(com.google.protobuf.gradle.GenerateProtoTask).configureEach {
     doFirst {
-        plugins.each { plugin ->
-            def path = plugin.path
-            if (path && new File(path).exists()) {
-                project.exec {
-                    commandLine 'chmod', '+x', path
-                }
-            }
-        }
-        // Also fix protoc itself
-        def protocPath = protoc.path
-        if (protocPath && new File(protocPath).exists()) {
-             project.exec {
-                    commandLine 'chmod', '+x', protocPath
-                }
+        // We know where the binaries are downloaded (the Gradle cache)
+        // This shell command finds any downloaded protoc or grpc plugins
+        // in the current user's cache and makes them executable.
+        project.exec {
+            commandLine 'sh', '-c', "find ${System.getProperty('user.home')}/.gradle/caches -name \"*.exe\" -exec chmod +x {} +"
         }
     }
 }
