@@ -67,25 +67,7 @@ protobuf {
     }
 }
 
-tasks.withType(com.google.protobuf.gradle.GenerateProtoTask) {
-    doFirst {
-        plugins.each { plugin ->
-            def path = plugin.path
-            if (path && new File(path).exists()) {
-                project.exec {
-                    commandLine 'chmod', '+x', path
-                }
-            }
-        }
-        // Also fix protoc itself
-        def protocPath = protoc.path
-        if (protocPath && new File(protocPath).exists()) {
-             project.exec {
-                    commandLine 'chmod', '+x', protocPath
-                }
-        }
-    }
-}
+
 
 
 googleJavaFormat {
@@ -139,4 +121,24 @@ applicationDistribution.into('bin') {
     from(adService)
     from(adServiceClient)
     fileMode = 0755
+}
+
+tasks.withType(com.google.protobuf.gradle.GenerateProtoTask) {
+    doFirst {
+        plugins.each { plugin ->
+            def path = plugin.path
+            if (path && new File(path).exists()) {
+                project.exec {
+                    commandLine 'chmod', '+x', path
+                }
+            }
+        }
+        // Also fix protoc itself
+        def protocPath = protoc.path
+        if (protocPath && new File(protocPath).exists()) {
+             project.exec {
+                    commandLine 'chmod', '+x', protocPath
+                }
+        }
+    }
 }
