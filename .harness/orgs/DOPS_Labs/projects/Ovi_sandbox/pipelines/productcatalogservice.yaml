@@ -83,5 +83,9 @@ pipeline:
         ci:
           codebase:
             build: <+input>
+      variables:
+        - name: language
+          type: String
+          value: <+input>.selectOneFrom(golang,java,dotnet)
   projectIdentifier: Ovi_sandbox
   orgIdentifier: DOPS_Labs
