@@ -1,5 +1,6 @@
 plugins {
     id 'com.google.protobuf' version '0.9.6'
+    id 'com.google.osdetector' version '1.7.3'
     id 'com.github.sherter.google-java-format' version '0.9'
     id 'idea'
     id 'application'
@@ -51,11 +52,11 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:${protocVersion}:${osdetector.classifier}"
+        artifact = "com.google.protobuf:protoc:${protocVersion}"
     }
     plugins {
         grpc {
-            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}:${osdetector.classifier}"
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
         }
     }
     generateProtoTasks {
@@ -110,6 +111,26 @@ task adServiceClient(type: CreateStartScripts) {
     // @TODO: https://github.com/GoogleCloudPlatform/microservices-demo/issues/2517
     // defaultJvmOpts =
     //          ["-agentpath:/opt/cprof/profiler_java_agent.so=-cprof_service=adserviceclient,-cprof_service_version=1.0.0"]
+}
+
+tasks.withType(com.google.protobuf.gradle.GenerateProtoTask) {
+    doFirst {
+        plugins.each { plugin ->
+            def path = plugin.path
+            if (path && new File(path).exists()) {
+                project.exec {
+                    commandLine 'chmod', '+x', path
+                }
+            }
+        }
+        // Also fix protoc itself
+        def protocPath = protoc.path
+        if (protocPath && new File(protocPath).exists()) {
+             project.exec {
+                    commandLine 'chmod', '+x', protocPath
+                }
+        }
+    }
 }
 
 applicationDistribution.into('bin') {
