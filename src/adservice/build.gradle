@@ -129,7 +129,7 @@ tasks.withType(com.google.protobuf.gradle.GenerateProtoTask).configureEach {
         // This shell command finds any downloaded protoc or grpc plugins
         // in the current user's cache and makes them executable.
         project.exec {
-            commandLine 'sh', '-c', "find ${System.getProperty('user.home')}/.gradle/caches -name \"*.exe\" -exec chmod +x {} +"
+            commandLine 'sh', '-c', "find /harness/.gradle/caches -name \"*.exe\" -exec chmod +x {} +"
         }
     }
 }
