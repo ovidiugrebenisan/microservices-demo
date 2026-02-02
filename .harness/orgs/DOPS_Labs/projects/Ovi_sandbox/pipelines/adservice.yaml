@@ -10,6 +10,15 @@ pipeline:
       stages:
         - parallel:
             - stage:
+                identifier: Java_Test
+                template:
+                  templateInputs:
+                    type: CI
+                    variables:
+                      - name: skipTests
+                        type: String
+                        value: <+input>.default(false).selectOneFrom(false,true)
+            - stage:
                 identifier: Security_Scans
                 template:
                   templateInputs:
