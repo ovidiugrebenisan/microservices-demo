@@ -61,10 +61,6 @@ pipeline:
               templateInputs:
                 type: CI
                 spec:
-                  infrastructure:
-                    type: KubernetesDirect
-                    spec:
-                      serviceAccountName: <+input>
                   execution:
                     steps:
                       - stepGroup:
@@ -85,9 +81,6 @@ pipeline:
                                 - name: docker_tag
                                   type: String
                                   value: <+input>
-                                - name: ecr_repo_name
-                                  type: String
-                                  value: <+input>
       properties:
         ci:
           codebase:
@@ -95,6 +88,6 @@ pipeline:
       variables:
         - name: language
           type: String
-          value: <+input>.selectOneFrom(golang,java,dotnet)
+          value: <+input>.selectOneFrom(golang,java,dotnet,python,javascript)
   projectIdentifier: Ovi_sandbox
   orgIdentifier: DOPS_Labs
