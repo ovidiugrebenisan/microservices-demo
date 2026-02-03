@@ -95,6 +95,6 @@ pipeline:
       variables:
         - name: language
           type: String
-          value: <+input>.selectOneFrom(golang,java,dotnet)
+          value: <+input>.selectOneFrom(golang,java,dotnet,python,javascript)
   projectIdentifier: Ovi_sandbox
   orgIdentifier: DOPS_Labs
