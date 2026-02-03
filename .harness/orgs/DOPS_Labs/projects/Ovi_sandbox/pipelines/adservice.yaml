@@ -55,6 +55,15 @@ pipeline:
                                                   target:
                                                     type: repository
                                                     variant: <+input>
+            - stage:
+                identifier: TI
+                type: CI
+                spec:
+                  execution:
+                    steps:
+                      - insert:
+                          identifier: Test_Intelligence
+                          steps: <+input>
         - stage:
             identifier: Build_Scan_Push
             template:
