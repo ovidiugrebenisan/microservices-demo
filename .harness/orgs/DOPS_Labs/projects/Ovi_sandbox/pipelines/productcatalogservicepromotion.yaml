@@ -1,0 +1,19 @@
+pipeline:
+  name: productcatalogservice-promotion
+  identifier: productcatalogservicepromotion
+  tags: {}
+  template:
+    templateRef: Image_Promotion
+    versionLabel: "1"
+    gitBranch: main
+    templateInputs:
+      properties:
+        ci:
+          codebase:
+            build: <+input>
+      variables:
+        - name: service_name
+          type: String
+          value: <+input>
+  projectIdentifier: Ovi_sandbox
+  orgIdentifier: DOPS_Labs
