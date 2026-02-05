@@ -1,0 +1,20 @@
+inputSet:
+  name: Merge
+  identifier: Merge
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservicepromotion
+    template:
+      templateInputs:
+        properties:
+          ci:
+            codebase:
+              build:
+                type: PR
+                spec:
+                  number: <+trigger.prNumber>
+        variables:
+          - name: service_name
+            type: String
+            value: productcatalogservice
