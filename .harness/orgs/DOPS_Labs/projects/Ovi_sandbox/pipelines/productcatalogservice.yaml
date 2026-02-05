@@ -18,28 +18,6 @@ pipeline:
                       - name: skipTests
                         type: String
                         value: <+input>.default(false).selectOneFrom(false,true)
-        - stage:
-            identifier: Build_Scan_Push
-            template:
-              templateInputs:
-                type: CI
-                spec:
-                  execution:
-                    steps:
-                      - stepGroup:
-                          identifier: BuildScanPush
-                          template:
-                            templateInputs:
-                              steps:
-                                - step:
-                                    identifier: Ingest_Trivy_Image_Scan
-                                    template:
-                                      templateInputs:
-                                        type: CustomIngest
-                                        spec:
-                                          target:
-                                            type: container
-                                            variant: <+input>
       properties:
         ci:
           codebase:
