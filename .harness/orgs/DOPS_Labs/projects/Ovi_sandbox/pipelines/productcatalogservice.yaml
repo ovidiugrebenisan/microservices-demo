@@ -1,5 +1,5 @@
 pipeline:
-  name: productcatalogservice
+  name: productcatalogservice-ci
   identifier: productcatalogservice
   tags: {}
   template:
