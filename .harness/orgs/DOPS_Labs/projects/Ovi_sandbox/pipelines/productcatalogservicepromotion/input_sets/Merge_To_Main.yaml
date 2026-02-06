@@ -1,0 +1,20 @@
+inputSet:
+  name: Merge To Main
+  identifier: Merge_To_Main
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservicepromotion
+    template:
+      templateInputs:
+        properties:
+          ci:
+            codebase:
+              build:
+                type: branch
+                spec:
+                  branch: <+trigger.branch>
+        variables:
+          - name: service_name
+            type: String
+            value: productcatalogservice
