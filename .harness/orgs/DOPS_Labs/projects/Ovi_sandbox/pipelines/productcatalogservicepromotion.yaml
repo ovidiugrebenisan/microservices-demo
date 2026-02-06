@@ -7,10 +7,6 @@ pipeline:
     versionLabel: "1"
     gitBranch: main
     templateInputs:
-      properties:
-        ci:
-          codebase:
-            build: <+input>
       variables:
         - name: service_name
           type: String
