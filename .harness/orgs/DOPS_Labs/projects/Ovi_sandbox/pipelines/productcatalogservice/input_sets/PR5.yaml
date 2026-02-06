@@ -1,0 +1,34 @@
+inputSet:
+  name: PR5
+  identifier: PR5
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservice
+    template:
+      templateInputs:
+        stages:
+          - parallel:
+              - stage:
+                  identifier: Java_Test
+                  template:
+                    templateInputs:
+                      type: CI
+                      variables:
+                        - name: skipTests
+                          type: String
+                          value: "false"
+        properties:
+          ci:
+            codebase:
+              build:
+                type: PR
+                spec:
+                  number: <+trigger.prNumber>
+        variables:
+          - name: language
+            type: String
+            value: golang
+          - name: service_name
+            type: String
+            value: productcatalogservice
