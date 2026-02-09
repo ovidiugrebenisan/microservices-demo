@@ -11,5 +11,8 @@ pipeline:
         - name: service_name
           type: String
           value: <+input>
+        - name: promotion_type
+          type: String
+          value: <+input>.selectOneFrom(PR,Tag)
   projectIdentifier: Ovi_sandbox
   orgIdentifier: DOPS_Labs
