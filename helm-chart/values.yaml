@@ -173,7 +173,7 @@ paymentService:
 productCatalogService:
   create: true
   name: productcatalogservice
-  tag: ""
+  tag: <+artifacts.productcatalogservice.tag>
   # Specifies an extra latency to any request on productcatalogservice, by default no extra latency.
   extraLatency: ""
   resources:
