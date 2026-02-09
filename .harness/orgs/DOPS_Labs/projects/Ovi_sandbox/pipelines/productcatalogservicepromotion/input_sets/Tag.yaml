@@ -1,0 +1,16 @@
+inputSet:
+  name: Tag
+  identifier: Tag
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: productcatalogservicepromotion
+    template:
+      templateInputs:
+        variables:
+          - name: service_name
+            type: String
+            value: productcatalogservice
+          - name: promotion_type
+            type: String
+            value: Tag
