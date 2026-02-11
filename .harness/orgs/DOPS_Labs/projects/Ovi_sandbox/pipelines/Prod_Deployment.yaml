@@ -41,12 +41,18 @@ pipeline:
                             spec:
                               count: 1
                           skipDryRun: false
+                          ignoreReleaseHistFailStatus: false
+                          skipSteadyStateCheck: false
+                          delegateSelectors:
+                            - dev
                     - step:
                         name: Canary Delete
                         identifier: canaryDelete
                         type: HelmCanaryDelete
                         timeout: 10m
-                        spec: {}
+                        spec:
+                          delegateSelectors:
+                            - dev
               - stepGroup:
                   name: Primary Deployment
                   identifier: primaryDeployment
@@ -58,6 +64,9 @@ pipeline:
                         timeout: 10m
                         spec:
                           skipDryRun: false
+                          ignoreReleaseHistFailStatus: false
+                          delegateSelectors:
+                            - dev
             rollbackSteps:
               - step:
                   name: Canary Delete
