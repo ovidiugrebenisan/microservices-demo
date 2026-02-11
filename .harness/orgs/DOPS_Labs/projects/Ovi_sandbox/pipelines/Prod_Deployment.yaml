@@ -43,6 +43,8 @@ pipeline:
                   timeout: 10m
                   spec:
                     skipDryRun: false
+                    delegateSelectors:
+                      - dev
             rollbackSteps:
               - step:
                   name: Swap primary with stage service
