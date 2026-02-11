@@ -34,6 +34,8 @@ pipeline:
                   spec:
                     skipDryRun: false
                     pruningEnabled: false
+                    delegateSelectors:
+                      - dev
               - step:
                   name: Swap primary with stage service
                   identifier: bgSwapServices
