@@ -6,8 +6,8 @@ pipeline:
   tags: {}
   stages:
     - stage:
-        name: Production Deployment
-        identifier: Production_Deployment
+        name: Prod Deploy
+        identifier: Prod_Deploy
         description: ""
         type: Deployment
         spec:
@@ -23,67 +23,32 @@ pipeline:
                   identifier: devcluster
                   type: KubernetesDirect
                   spec:
-                    namespace: <+input>
+                    namespace: default
           execution:
             steps:
-              - stepGroup:
-                  name: Canary Deployment
-                  identifier: canaryDeployment
-                  steps:
-                    - step:
-                        name: Canary Deployment
-                        identifier: canaryDeployment
-                        type: HelmCanaryDeploy
-                        timeout: 10m
-                        spec:
-                          instanceSelection:
-                            type: Count
-                            spec:
-                              count: 1
-                          skipDryRun: false
-                          ignoreReleaseHistFailStatus: false
-                          skipSteadyStateCheck: false
-                          delegateSelectors:
-                            - dev
-                    - step:
-                        name: Canary Delete
-                        identifier: canaryDelete
-                        type: HelmCanaryDelete
-                        timeout: 10m
-                        spec:
-                          delegateSelectors:
-                            - dev
-                  delegateSelectors:
-                    - dev
-              - stepGroup:
-                  name: Primary Deployment
-                  identifier: primaryDeployment
-                  steps:
-                    - step:
-                        name: Rolling Deployment
-                        identifier: rollingDeployment
-                        type: HelmDeploy
-                        timeout: 10m
-                        spec:
-                          skipDryRun: false
-                          ignoreReleaseHistFailStatus: false
-                          delegateSelectors:
-                            - dev
-                  delegateSelectors:
-                    - dev
+              - step:
+                  name: Stage Deployment
+                  identifier: stageDeployment
+                  type: HelmBGDeploy
+                  timeout: 10m
+                  spec:
+                    skipDryRun: false
+                    pruningEnabled: false
+              - step:
+                  name: Swap primary with stage service
+                  identifier: bgSwapServices
+                  type: HelmBlueGreenSwapStep
+                  timeout: 10m
+                  spec:
+                    skipDryRun: false
             rollbackSteps:
               - step:
-                  name: Canary Delete
-                  identifier: rollbackCanaryDelete
-                  type: HelmCanaryDelete
+                  name: Swap primary with stage service
+                  identifier: rollbackBgSwapServices
+                  type: HelmBlueGreenSwapStep
                   timeout: 10m
-                  spec: {}
-              - step:
-                  name: Rolling Rollback
-                  identifier: rollingRollback
-                  type: HelmRollback
-                  timeout: 10m
-                  spec: {}
+                  spec:
+                    skipDryRun: false
         tags: {}
         failureStrategies:
           - onFailure:
