@@ -14,14 +14,6 @@ pipeline:
           deploymentType: NativeHelm
           service:
             serviceRef: microservicesdemo
-            serviceInputs:
-              serviceDefinition:
-                type: NativeHelm
-                spec:
-                  artifacts:
-                    primary:
-                      primaryArtifactRef: <+input>
-                      sources: <+input>
           environment:
             environmentRef: DEV
             deployToAll: false
