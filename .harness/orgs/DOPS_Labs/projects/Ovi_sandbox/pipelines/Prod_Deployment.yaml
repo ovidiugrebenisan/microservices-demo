@@ -13,7 +13,21 @@ pipeline:
         spec:
           deploymentType: NativeHelm
           service:
-            serviceRef: microservicesdemo
+            serviceRef: productcatalogservice
+            serviceInputs:
+              serviceDefinition:
+                type: NativeHelm
+                spec:
+                  artifacts:
+                    primary:
+                      sources:
+                        - identifier: productcatalogservice
+                          template:
+                            templateInputs:
+                              type: Ecr
+                              spec:
+                                imagePath: <+input>
+                                tag: <+input>
           environment:
             environmentRef: DEV
             deployToAll: false
