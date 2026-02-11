@@ -28,22 +28,12 @@ pipeline:
           execution:
             steps:
               - step:
-                  type: HelmCanaryDeploy
-                  name: HelmCanaryDeploy_1
-                  identifier: HelmCanaryDeploy_1
+                  type: HelmBGDeploy
+                  name: HelmBGDeploy_1
+                  identifier: HelmBGDeploy_1
                   spec:
-                    ignoreReleaseHistFailStatus: false
-                    skipSteadyStateCheck: false
-                    instanceSelection:
-                      type: Count
-                      spec:
-                        count: 1
-                  timeout: 10m
-              - step:
-                  type: HelmCanaryDelete
-                  name: HelmCanaryDelete_1
-                  identifier: HelmCanaryDelete_1
-                  spec: {}
+                    delegateSelectors:
+                      - dev
                   timeout: 10m
             rollbackSteps:
               - step:
