@@ -78,5 +78,7 @@ pipeline:
                 - AllErrors
               action:
                 type: StageRollback
+        delegateSelectors:
+          - dev
   delegateSelectors:
     - dev
