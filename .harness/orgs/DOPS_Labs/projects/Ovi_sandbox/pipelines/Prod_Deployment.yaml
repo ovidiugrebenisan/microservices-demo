@@ -6,15 +6,14 @@ pipeline:
   tags: {}
   stages:
     - stage:
-        name: deploy
-        identifier: deploy
+        name: depl
+        identifier: depl
         description: ""
         type: Deployment
         spec:
           deploymentType: NativeHelm
           service:
             serviceRef: microservicesdemo
-            disableArtifactValidation: true
           environment:
             environmentRef: DEV
             deployToAll: false
@@ -28,26 +27,28 @@ pipeline:
           execution:
             steps:
               - step:
+                  name: Stage Deployment
+                  identifier: stageDeployment
                   type: HelmBGDeploy
-                  name: HelmBGDeploy_1
-                  identifier: HelmBGDeploy_1
-                  spec:
-                    delegateSelectors:
-                      - dev
                   timeout: 10m
+                  spec:
+                    skipDryRun: false
+                    pruningEnabled: false
+              - step:
+                  name: Swap primary with stage service
+                  identifier: bgSwapServices
+                  type: HelmBlueGreenSwapStep
+                  timeout: 10m
+                  spec:
+                    skipDryRun: false
             rollbackSteps:
               - step:
-                  name: Canary Delete
-                  identifier: rollbackCanaryDelete
-                  type: HelmCanaryDelete
+                  name: Swap primary with stage service
+                  identifier: rollbackBgSwapServices
+                  type: HelmBlueGreenSwapStep
                   timeout: 10m
-                  spec: {}
-              - step:
-                  name: Rolling Rollback
-                  identifier: rollingRollback
-                  type: HelmRollback
-                  timeout: 10m
-                  spec: {}
+                  spec:
+                    skipDryRun: false
         tags: {}
         failureStrategies:
           - onFailure:
@@ -55,7 +56,5 @@ pipeline:
                 - AllErrors
               action:
                 type: StageRollback
-        delegateSelectors:
-          - dev
   delegateSelectors:
     - dev
