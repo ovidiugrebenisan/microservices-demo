@@ -1,0 +1,32 @@
+inputSet:
+  name: ECR
+  identifier: ECR
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: Deploy_Single_Service
+    stages:
+      - stage:
+          identifier: Deploy
+          type: Deployment
+          spec:
+            service:
+              serviceInputs:
+                serviceDefinition:
+                  type: NativeHelm
+                  spec:
+                    artifacts:
+                      primary:
+                        sources:
+                          - identifier: productcatalogservice
+                            template:
+                              templateInputs:
+                                type: Ecr
+                                spec:
+                                  imagePath: microservices-demo/productcatalogservice
+                                  tag: <+trigger.artifact.build>
+              serviceRef: productcatalogservice
+    properties:
+      ci:
+        codebase:
+          build: <+input>
