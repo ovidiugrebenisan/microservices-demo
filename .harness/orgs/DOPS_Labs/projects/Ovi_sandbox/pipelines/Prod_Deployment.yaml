@@ -53,6 +53,8 @@ pipeline:
                         spec:
                           delegateSelectors:
                             - dev
+                  delegateSelectors:
+                    - dev
               - stepGroup:
                   name: Primary Deployment
                   identifier: primaryDeployment
@@ -67,6 +69,8 @@ pipeline:
                           ignoreReleaseHistFailStatus: false
                           delegateSelectors:
                             - dev
+                  delegateSelectors:
+                    - dev
             rollbackSteps:
               - step:
                   name: Canary Delete
