@@ -1,0 +1,36 @@
+images:
+  repository: 930385231819.dkr.ecr.eu-north-1.amazonaws.com/microservices-demo
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 1.0.0
+
+serviceAccounts:
+  # Specifies whether service accounts should be created.
+  create: true
+  # Annotations to add to the service accounts.
+  annotations: {}
+  # Annotations to add only for the cartservice app. This allows to follow the least privilege principle where only cartservice needs to connect to external database for example via Workload Identity.
+  annotationsOnlyForCartservice: false
+
+networkPolicies:
+  # Specifies if the NetworkPolicies are created or not. If true, one fine granular NetworkPolicy per app is created.
+  create: false
+
+sidecars:
+  # Specifies if the Sidecars are created or not. If true, one fine granular Sidecar per app is created.
+  create: false
+
+authorizationPolicies:
+  # Specifies if the AuthorizationPolicies are created or not. If true, one fine granular AuthorizationPolicy per app is created.
+  create: false
+
+adService:
+  create: true
+  name: adservice
+  tag: <+artifacts.primary.tag>
+  resources:
+    requests:
+      cpu: 200m
+      memory: 180Mi
+    limits:
+      cpu: 300m
+      memory: 300Mi
