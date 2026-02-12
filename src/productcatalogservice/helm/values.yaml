@@ -35,10 +35,12 @@ seccompProfile:
   enable: false
   type: RuntimeDefault
 
-checkoutService:
+productCatalogService:
   create: true
-  name: checkoutservice
+  name: productcatalogservice
   tag: <+artifacts.primary.tag>
+  # Specifies an extra latency to any request on productcatalogservice, by default no extra latency.
+  extraLatency: ""
   resources:
     requests:
       cpu: 100m

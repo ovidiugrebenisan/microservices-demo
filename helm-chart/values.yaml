@@ -59,42 +59,6 @@ seccompProfile:
 securityContext:
   enable: true
 
-checkoutService:
-  create: true
-  name: checkoutservice
-  tag: ""
-  resources:
-    requests:
-      cpu: 100m
-      memory: 64Mi
-    limits:
-      cpu: 200m
-      memory: 128Mi
-
-currencyService:
-  create: true
-  name: currencyservice
-  tag: ""
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
-    limits:
-      cpu: 200m
-      memory: 256Mi
-
-emailService:
-  create: true
-  name: emailservice
-  tag: ""
-  resources:
-    requests:
-      cpu: 100m
-      memory: 64Mi
-    limits:
-      cpu: 200m
-      memory: 128Mi
-
 frontend:
   create: true
   name: frontend

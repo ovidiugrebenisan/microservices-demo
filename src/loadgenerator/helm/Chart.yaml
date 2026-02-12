@@ -13,8 +13,8 @@
 # limitations under the License.
 
 apiVersion: v2
-name: checkoutservice
-description: A Helm chart for Kubernetes for Online Boutique Checkout Service
+name: loadgenerator
+description: A Helm chart for Kubernetes for Online Boutique Load Generator
 
 # A chart can be either an 'application' or a 'library' chart.
 #

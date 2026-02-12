@@ -95,7 +95,7 @@ spec:
         image: busybox:latest@sha256:2383baad1860bbe9d8a7a843775048fd07d8afe292b94bd876df64a69aae7cb1
         env:
         - name: FRONTEND_ADDR
-          value: "{{ .Values.frontend.name }}:80"
+          value: "frontend:80"
       {{- end }}
       containers:
       - name: main
@@ -109,7 +109,7 @@ spec:
         image: {{ .Values.images.repository }}/{{ .Values.loadGenerator.name }}:{{ .Values.loadGenerator.tag | default .Values.images.tag | default .Chart.AppVersion }}
         env:
         - name: FRONTEND_ADDR
-          value: "{{ .Values.frontend.name }}:80"
+          value: "frontend:80"
         - name: USERS
           value: "10"
         - name: RATE
@@ -148,7 +148,7 @@ spec:
   egress:
   - hosts:
     - istio-system/*
-    - ./{{ .Values.frontend.name }}.{{ .Release.Namespace }}.svc.cluster.local
+    - ./frontend.{{ .Release.Namespace }}.svc.cluster.local
     {{- if .Values.opentelemetryCollector.create }}
     - ./{{ .Values.opentelemetryCollector.name }}.{{ .Release.Namespace }}.svc.cluster.local
     {{- end }}

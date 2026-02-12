@@ -215,15 +215,15 @@ spec:
   egress:
   - hosts:
     - istio-system/*
-    - ./{{ .Values.adService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-    - ./{{ .Values.cartService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-    - ./{{ .Values.checkoutService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-    - ./{{ .Values.currencyService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-    - ./{{ .Values.productCatalogService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-    - ./{{ .Values.recommendationService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-    - ./{{ .Values.shippingService.name }}.{{ .Release.Namespace }}.svc.cluster.local
+    - ./adservice.{{ .Release.Namespace }}.svc.cluster.local
+    - ./cartservice.{{ .Release.Namespace }}.svc.cluster.local
+    - ./checkoutservice.{{ .Release.Namespace }}.svc.cluster.local
+    - ./currencyservice.{{ .Release.Namespace }}.svc.cluster.local
+    - ./productcatalogservice.{{ .Release.Namespace }}.svc.cluster.local
+    - ./recommendationservice.{{ .Release.Namespace }}.svc.cluster.local
+    - ./shippingservice.{{ .Release.Namespace }}.svc.cluster.local
     {{- if .Values.opentelemetryCollector.create }}
-    - ./{{ .Values.opentelemetryCollector.name }}.{{ .Release.Namespace }}.svc.cluster.local
+    - ./opentelemetrycollector.{{ .Release.Namespace }}.svc.cluster.local
     {{- end }}
 {{- end }}
 {{- if .Values.authorizationPolicies.create }}
@@ -245,7 +245,7 @@ spec:
     - source:
         principals:
         {{- if .Values.serviceAccounts.create }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ .Values.loadGenerator.name }}
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/loadgenerator
         {{- else }}
         - cluster.local/ns/{{ .Release.Namespace }}/sa/default
         {{- end }}

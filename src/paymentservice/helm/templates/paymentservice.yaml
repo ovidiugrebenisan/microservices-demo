@@ -131,7 +131,7 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          app: {{ .Values.checkoutService.name }}
+          app: checkoutservice
     ports:
      - port: 50051
        protocol: TCP
@@ -172,7 +172,7 @@ spec:
     - source:
         principals:
         {{- if .Values.serviceAccounts.create }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ .Values.checkoutService.name }}
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/checkoutservice
         {{- else }}
         - cluster.local/ns/{{ .Release.Namespace }}/sa/default
         {{- end }}

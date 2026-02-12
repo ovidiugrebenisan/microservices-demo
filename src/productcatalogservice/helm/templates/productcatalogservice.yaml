@@ -133,13 +133,13 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          app: {{ .Values.frontend.name }}
+          app: frontend
     - podSelector:
         matchLabels:
-          app: {{ .Values.checkoutService.name }}
+          app: checkoutservice
     - podSelector:
         matchLabels:
-          app: {{ .Values.recommendationService.name }}
+          app: recommendationservice
     ports:
      - port: 3550
        protocol: TCP
@@ -180,9 +180,9 @@ spec:
     - source:
         principals:
         {{- if .Values.serviceAccounts.create }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ .Values.frontend.name }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ .Values.checkoutService.name }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ .Values.recommendationService.name }}
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/frontend
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/checkoutservice
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/recommendationservice
         {{- else }}
         - cluster.local/ns/{{ .Release.Namespace }}/sa/default
         {{- end }}

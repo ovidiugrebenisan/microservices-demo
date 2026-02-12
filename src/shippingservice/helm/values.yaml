@@ -35,10 +35,10 @@ seccompProfile:
   enable: false
   type: RuntimeDefault
 
-checkoutService:
+shippingService:
   create: true
-  name: checkoutservice
-  tag: <+artifacts.primary.tag>
+  name: shippingservice
+  tag: <+artifact.primary.tag>
   resources:
     requests:
       cpu: 100m

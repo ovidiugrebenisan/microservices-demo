@@ -13,8 +13,8 @@
 # limitations under the License.
 
 apiVersion: v2
-name: checkoutservice
-description: A Helm chart for Kubernetes for Online Boutique Checkout Service
+name: emailservice
+description: A Helm chart for Kubernetes for Online Boutique Email Service
 
 # A chart can be either an 'application' or a 'library' chart.
 #
