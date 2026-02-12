@@ -13,8 +13,8 @@
 # limitations under the License.
 
 apiVersion: v2
-name: adservice
-description: A Helm chart for Kubernetes for Online Boutique AdService
+name: cartservice
+description: A Helm chart for Kubernetes for Online Boutique CartService
 
 # A chart can be either an 'application' or a 'library' chart.
 #
