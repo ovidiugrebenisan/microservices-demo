@@ -56,3 +56,5 @@ pipeline:
         build: <+input>
         sparseCheckout: []
         depth: 1
+  delegateSelectors:
+    - dev
