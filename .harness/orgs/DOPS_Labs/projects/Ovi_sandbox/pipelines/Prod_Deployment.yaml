@@ -13,7 +13,7 @@ pipeline:
         spec:
           deploymentType: NativeHelm
           service:
-            serviceRef: adservice
+            serviceRef: cartservice
             serviceInputs:
               serviceDefinition:
                 type: NativeHelm
