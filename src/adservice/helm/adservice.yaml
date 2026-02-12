@@ -162,7 +162,7 @@ spec:
     - source:
         principals:
         {{- if .Values.serviceAccounts.create }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ .Values.frontend.name }}
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/frontend
         {{- else }}
         - cluster.local/ns/{{ .Release.Namespace }}/sa/default
         {{- end }}
