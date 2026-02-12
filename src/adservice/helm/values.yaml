@@ -18,7 +18,7 @@ authorizationPolicies:
   create: false
 
 securityContext:
-  enable: false
+  enable: true
 
 adService:
   create: true
