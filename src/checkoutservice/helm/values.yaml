@@ -1,0 +1,33 @@
+images:
+  repository: 930385231819.dkr.ecr.eu-north-1.amazonaws.com/microservices-demo
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 1.0.0
+
+serviceAccounts:
+  create: true
+  annotations: {}
+  annotationsOnlyForCartservice: false
+
+networkPolicies:
+  create: false
+
+sidecars:
+  create: false
+
+authorizationPolicies:
+  create: false
+
+securityContext:
+  enable: true
+
+cartService:
+  create: true
+  name: cartservice
+  tag: <+artifacts.primary.tag>
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
