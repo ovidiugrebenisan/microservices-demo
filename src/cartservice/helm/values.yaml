@@ -31,3 +31,19 @@ cartService:
     limits:
       cpu: 300m
       memory: 256Mi
+
+cartDatabase:
+  # Specifies the type of the cartservice's database, could be either redis or spanner.
+  type: redis
+  connectionString: "redis-cart:6379"
+  inClusterRedis:
+    create: true
+    name: redis-cart
+    # Uses the public redis image from Docker Hub, otherwise will use the images.repository.
+    publicRepository: true
+  externalRedisTlsOrigination:
+    enable: false
+    name: exernal-redis-tls-origination
+    endpointAddress: ""
+    endpointPort: ""
+    certificate: ""

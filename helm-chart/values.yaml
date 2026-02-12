@@ -59,18 +59,6 @@ seccompProfile:
 securityContext:
   enable: true
 
-cartService:
-  create: true
-  name: cartservice
-  tag: ""
-  resources:
-    requests:
-      cpu: 200m
-      memory: 128Mi
-    limits:
-      cpu: 300m
-      memory: 256Mi
-
 checkoutService:
   create: true
   name: checkoutservice
@@ -195,22 +183,6 @@ shippingService:
     limits:
       cpu: 200m
       memory: 128Mi
-
-cartDatabase:
-  # Specifies the type of the cartservice's database, could be either redis or spanner.
-  type: redis
-  connectionString: "redis-cart:6379"
-  inClusterRedis:
-    create: true
-    name: redis-cart
-    # Uses the public redis image from Docker Hub, otherwise will use the images.repository.
-    publicRepository: true
-  externalRedisTlsOrigination:
-    enable: false
-    name: exernal-redis-tls-origination
-    endpointAddress: ""
-    endpointPort: ""
-    certificate: ""
 
 # @TODO: This service is not currently available in Helm.
 # https://github.com/GoogleCloudPlatform/microservices-demo/tree/main/kustomize/components/shopping-assistant
