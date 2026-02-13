@@ -1,0 +1,27 @@
+inputSet:
+  name: productcatalogservice
+  identifier: productcatalogservice
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: Deploy_Single_Service
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Deploy
+              type: Deployment
+              spec:
+                service:
+                  serviceRef: productcatalogservice
+                  serviceInputs:
+                    serviceDefinition:
+                      type: NativeHelm
+                      spec:
+                        artifacts:
+                          primary:
+                            primaryArtifactRef: <+artifact.tag>
+        properties:
+          ci:
+            codebase:
+              build: <+input>
