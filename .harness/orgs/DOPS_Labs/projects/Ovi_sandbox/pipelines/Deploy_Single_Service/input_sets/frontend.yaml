@@ -1,0 +1,34 @@
+inputSet:
+  name: frontend
+  identifier: frontend
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: Deploy_Single_Service
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Deploy
+              type: Deployment
+              spec:
+                service:
+                  serviceRef: frontend
+                  serviceInputs:
+                    serviceDefinition:
+                      type: NativeHelm
+                      spec:
+                        artifacts:
+                          primary:
+                            primaryArtifactRef: frontend
+                            sources:
+                              - identifier: frontend
+                                template:
+                                  templateInputs:
+                                    type: Ecr
+                                    spec:
+                                      tag: <+artifact.tag>
+        properties:
+          ci:
+            codebase:
+              build: <+input>
