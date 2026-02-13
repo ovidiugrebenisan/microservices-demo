@@ -127,7 +127,7 @@ spec:
           - name: CYMBAL_BRANDING
             value: {{ .Values.frontend.cymbalBranding | quote }}
           - name: ENABLE_ASSISTANT
-            value: {{ .Values.shoppingAssistantService.create | quote }}
+            value: "false"
           - name: ENABLE_SINGLE_SHARED_SESSION
             value: {{ .Values.frontend.singleSharedSession | quote }}
           resources:
