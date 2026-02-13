@@ -38,7 +38,7 @@ seccompProfile:
 shippingService:
   create: true
   name: shippingservice
-  tag: <+artifact.primary.tag>
+  tag: <+artifacts.primary.tag>
   resources:
     requests:
       cpu: 100m
