@@ -1,0 +1,34 @@
+inputSet:
+  name: input2
+  identifier: input2
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: Deploy_Single_Service
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Deploy
+              type: Deployment
+              spec:
+                service:
+                  serviceRef: productcatalogservice
+                  serviceInputs:
+                    serviceDefinition:
+                      type: NativeHelm
+                      spec:
+                        artifacts:
+                          primary:
+                            primaryArtifactRef: productcatalogservice
+                            sources:
+                              - identifier: productcatalogservice
+                                template:
+                                  templateInputs:
+                                    type: Ecr
+                                    spec:
+                                      tag: <+trigger.artifact.build>
+        properties:
+          ci:
+            codebase:
+              build: <+input>
