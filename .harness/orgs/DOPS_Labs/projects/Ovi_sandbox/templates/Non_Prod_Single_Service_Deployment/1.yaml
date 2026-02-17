@@ -20,11 +20,6 @@ template:
               deployToAll: false
               infrastructureDefinitions:
                 - identifier: devcluster
-                  inputs:
-                    identifier: devcluster
-                    type: KubernetesDirect
-                    spec:
-                      namespace: default
             execution:
               steps:
                 - step:
