@@ -1,6 +1,5 @@
 plugins {
     id 'com.google.protobuf' version '0.9.6'
-    id 'com.google.osdetector' version '1.7.3'
     id 'com.github.sherter.google-java-format' version '0.9'
     id 'idea'
     id 'application'
@@ -16,9 +15,9 @@ group = "adservice"
 version = "0.1.0-SNAPSHOT"
 
 def grpcVersion = "1.78.0"
-def jacksonCoreVersion = "2.20.1"
-def jacksonDatabindVersion = "2.20.1"
-def protocVersion = "4.33.2"
+def jacksonCoreVersion = "2.21.0"
+def jacksonDatabindVersion = "2.21.0"
+def protocVersion = "4.33.4"
 
 tasks.withType(JavaCompile) {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -34,7 +33,7 @@ dependencies {
     if (speed) {
         implementation fileTree(dir: offlineCompile, include: '*.jar')
     } else {
-        implementation "com.google.api.grpc:proto-google-common-protos:2.63.2",
+        implementation "com.google.api.grpc:proto-google-common-protos:2.65.0",
                 "javax.annotation:javax.annotation-api:1.3.2",
                 "io.grpc:grpc-protobuf:${grpcVersion}",
                 "io.grpc:grpc-stub:${grpcVersion}",
@@ -66,9 +65,6 @@ protobuf {
         ofSourceSet('main')
     }
 }
-
-
-
 
 googleJavaFormat {
     toolVersion '1.33.0'
@@ -116,23 +112,8 @@ task adServiceClient(type: CreateStartScripts) {
     //          ["-agentpath:/opt/cprof/profiler_java_agent.so=-cprof_service=adserviceclient,-cprof_service_version=1.0.0"]
 }
 
-
 applicationDistribution.into('bin') {
     from(adService)
     from(adServiceClient)
     fileMode = 0755
-}
-
-tasks.withType(com.google.protobuf.gradle.GenerateProtoTask).configureEach {
-    doFirst {
-        // We know where the binaries are downloaded (the Gradle cache)
-        // This shell command finds any downloaded protoc or grpc plugins
-        // in the current user's cache and makes them executable.
-        project.exec {
-            commandLine 'sh', '-c', """
-            find ${System.getProperty('user.home')}/.gradle/caches -name "*.exe" -exec chmod +x {} + 2>/dev/null || true
-            find /harness/.gradle/caches -name "*.exe" -exec chmod +x {} + 2>/dev/null || true
-            """
-        }
-    }
 }
