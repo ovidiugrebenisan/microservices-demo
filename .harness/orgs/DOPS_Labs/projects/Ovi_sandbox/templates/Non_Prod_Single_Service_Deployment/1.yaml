@@ -97,7 +97,7 @@ template:
                     identifier: Zap_Scan
                     spec:
                       mode: orchestration
-                      config: default
+                      config: quick
                       target:
                         type: instance
                         detection: auto
