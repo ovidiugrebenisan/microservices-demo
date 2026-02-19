@@ -63,6 +63,11 @@ template:
                 connectorRef: DEV
                 namespace: default
                 automountServiceAccountToken: true
+                tolerations:
+                  - effect: NoSchedule
+                    key: work-type
+                    operator: Equal
+                    value: java-build
                 nodeSelector:
                   beta.kubernetes.io/arch: amd64
                 os: Linux
