@@ -1,0 +1,35 @@
+inputSet:
+  name: adservice-pr
+  identifier: adservicepr
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: Deploy_Single_Service
+    template:
+      templateInputs:
+        stages:
+          - stage:
+              identifier: Deploy
+              type: Deployment
+              spec:
+                service:
+                  serviceRef: adservice
+                  serviceInputs:
+                    serviceDefinition:
+                      type: NativeHelm
+                      spec:
+                        artifacts:
+                          primary:
+                            primaryArtifactRef: adservice
+                            sources:
+                              - identifier: adservice
+                                template:
+                                  templateInputs:
+                                    type: Ecr
+                                    spec:
+                                      imagePath: microservices-demo/adservice
+                                      tag: <+trigger.artifact.build>
+        properties:
+          ci:
+            codebase:
+              build: <+input>
