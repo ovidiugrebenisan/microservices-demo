@@ -63,7 +63,8 @@ template:
                 connectorRef: DEV
                 namespace: default
                 automountServiceAccountToken: true
-                nodeSelector: {}
+                nodeSelector:
+                  beta.kubernetes.io/arch: amd64
                 os: Linux
             execution:
               steps:
