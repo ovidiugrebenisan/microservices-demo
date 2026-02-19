@@ -68,42 +68,43 @@ template:
                 os: Linux
             execution:
               steps:
-                - step:
-                    type: Nikto
-                    name: Nikto Scan
-                    identifier: Nikto_Scan
-                    spec:
-                      mode: orchestration
-                      config: default
-                      target:
-                        type: instance
-                        detection: auto
-                      advanced:
-                        log:
-                          level: debug
-                        fail_on_severity: critical
-                      instance:
-                        domain: frontend
-                        protocol: http
-                        port: 80
-                - step:
-                    type: Zap
-                    name: Zap Scan
-                    identifier: Zap_Scan
-                    spec:
-                      mode: orchestration
-                      config: default
-                      target:
-                        type: instance
-                        detection: auto
-                      advanced:
-                        log:
-                          level: debug
-                        fail_on_severity: critical
-                      instance:
-                        domain: frontend
-                        protocol: http
-                        port: 80
+                - parallel:
+                    - step:
+                        type: Nikto
+                        name: Nikto Scan
+                        identifier: Nikto_Scan
+                        spec:
+                          mode: orchestration
+                          config: default
+                          target:
+                            type: instance
+                            detection: auto
+                          advanced:
+                            log:
+                              level: debug
+                            fail_on_severity: critical
+                          instance:
+                            domain: frontend
+                            protocol: http
+                            port: 80
+                    - step:
+                        type: Zap
+                        name: Zap Scan
+                        identifier: Zap_Scan
+                        spec:
+                          mode: orchestration
+                          config: default
+                          target:
+                            type: instance
+                            detection: auto
+                          advanced:
+                            log:
+                              level: debug
+                            fail_on_severity: critical
+                          instance:
+                            domain: frontend
+                            protocol: http
+                            port: 80
     delegateSelectors:
       - dev
   identifier: Non_Prod_Single_Service_Deployment
