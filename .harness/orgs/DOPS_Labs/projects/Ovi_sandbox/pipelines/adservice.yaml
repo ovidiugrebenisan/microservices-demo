@@ -7,17 +7,6 @@ pipeline:
     versionLabel: "1"
     gitBranch: main
     templateInputs:
-      stages:
-        - parallel:
-            - stage:
-                identifier: Java_Test
-                template:
-                  templateInputs:
-                    type: CI
-                    variables:
-                      - name: skipTests
-                        type: String
-                        value: <+input>.default(false).selectOneFrom(false,true)
       properties:
         ci:
           codebase:
