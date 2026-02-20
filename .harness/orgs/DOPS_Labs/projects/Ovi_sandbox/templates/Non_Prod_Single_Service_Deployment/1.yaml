@@ -107,7 +107,7 @@ template:
                         fail_on_severity: critical
                       resources:
                         limits:
-                          memory: 2.7Gi
+                          memory: 2Gi
                           cpu: 1500m
                       instance:
                         domain: frontend
