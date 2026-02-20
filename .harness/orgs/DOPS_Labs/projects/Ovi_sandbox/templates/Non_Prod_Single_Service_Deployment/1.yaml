@@ -44,14 +44,75 @@ template:
                   - AllErrors
                 action:
                   type: StageRollback
-    properties:
-      ci:
-        codebase:
-          connectorRef: github
-          repoName: microservices-demo
-          build: <+input>
-          sparseCheckout: []
-          depth: 1
+      - stage:
+          name: DAST
+          identifier: DAST
+          description: ""
+          type: SecurityTests
+          spec:
+            cloneCodebase: false
+            caching:
+              enabled: false
+              override: false
+              paths: []
+            buildIntelligence:
+              enabled: false
+            infrastructure:
+              type: KubernetesDirect
+              spec:
+                connectorRef: DEV
+                namespace: default
+                automountServiceAccountToken: true
+                tolerations:
+                  - effect: NoSchedule
+                    key: arch-type
+                    operator: Equal
+                    value: amd
+                nodeSelector:
+                  beta.kubernetes.io/arch: amd64
+                os: Linux
+            execution:
+              steps:
+                - step:
+                    type: Nikto
+                    name: Nikto Scan
+                    identifier: Nikto_Scan
+                    spec:
+                      mode: orchestration
+                      config: default
+                      target:
+                        type: instance
+                        detection: auto
+                      advanced:
+                        log:
+                          level: debug
+                        fail_on_severity: critical
+                      instance:
+                        domain: frontend
+                        protocol: http
+                        port: 80
+                - step:
+                    type: Zap
+                    name: Zap Scan
+                    identifier: Zap_Scan
+                    spec:
+                      mode: orchestration
+                      config: quick
+                      target:
+                        type: instance
+                        detection: auto
+                      advanced:
+                        log:
+                          level: debug
+                        fail_on_severity: critical
+                      resources:
+                        limits:
+                          memory: 2.7Gi
+                          cpu: 1500m
+                      instance:
+                        domain: frontend
+                        protocol: http
+                        port: 80
     delegateSelectors:
       - dev
   identifier: Non_Prod_Single_Service_Deployment

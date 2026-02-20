@@ -15,9 +15,5 @@ pipeline:
               service:
                 serviceRef: <+input>
                 serviceInputs: <+input>
-      properties:
-        ci:
-          codebase:
-            build: <+input>
   projectIdentifier: Ovi_sandbox
   orgIdentifier: DOPS_Labs
