@@ -1,5 +1,5 @@
 pipeline:
-  name: adservice
+  name: adservice-ci
   identifier: adservice
   tags: {}
   template:
