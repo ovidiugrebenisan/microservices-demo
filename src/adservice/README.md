@@ -28,7 +28,4 @@ docker build ./
 asdasdsadasd
 asdadsadsadas
 asdasdasda
-asdasdsada
-asdasdasd
-asdsadsadas
-asdsadsa
+asd
