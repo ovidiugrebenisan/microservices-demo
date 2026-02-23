@@ -44,6 +44,47 @@ template:
                   - AllErrors
                 action:
                   type: StageRollback
+      - stage:
+          name: DAST
+          identifier: DAST
+          description: ""
+          type: SecurityTests
+          spec:
+            cloneCodebase: false
+            caching:
+              enabled: false
+              override: false
+              paths: []
+            buildIntelligence:
+              enabled: false
+            infrastructure:
+              type: KubernetesDirect
+              spec:
+                connectorRef: DEV
+                namespace: default
+                automountServiceAccountToken: true
+                nodeSelector: {}
+                os: Linux
+            execution:
+              steps:
+                - step:
+                    type: Zap
+                    name: Zap
+                    identifier: Zap
+                    spec:
+                      mode: orchestration
+                      config: quick
+                      target:
+                        type: instance
+                        detection: auto
+                      advanced:
+                        log:
+                          level: info
+                        fail_on_severity: critical
+                      instance:
+                        domain: frontend
+                        protocol: http
+                        port: 80
     delegateSelectors:
       - dev
   identifier: Non_Prod_Single_Service_Deployment
