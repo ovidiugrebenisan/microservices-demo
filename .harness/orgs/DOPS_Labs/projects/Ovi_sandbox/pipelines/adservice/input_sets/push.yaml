@@ -1,0 +1,23 @@
+inputSet:
+  name: push
+  identifier: push
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: adservice
+    template:
+      templateInputs:
+        properties:
+          ci:
+            codebase:
+              build:
+                type: branch
+                spec:
+                  branch: <+trigger.branch>
+        variables:
+          - name: language
+            type: String
+            value: java
+          - name: service_name
+            type: String
+            value: adservice
