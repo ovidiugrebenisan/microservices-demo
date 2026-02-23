@@ -80,6 +80,9 @@ template:
                       advanced:
                         log:
                           level: info
+                      resources:
+                        limits:
+                          memory: 2Gi
                       instance:
                         domain: frontend
                         protocol: http
