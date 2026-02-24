@@ -1,5 +1,5 @@
 pipeline:
-  name: Deploy Single Service
+  name: Non Prod Deply
   identifier: Deploy_Single_Service
   tags: {}
   template:
