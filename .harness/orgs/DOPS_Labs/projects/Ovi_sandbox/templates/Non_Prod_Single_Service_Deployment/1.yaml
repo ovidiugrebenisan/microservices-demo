@@ -81,6 +81,9 @@ template:
                         log:
                           level: info
                         fail_on_severity: critical
+                      resources:
+                        limits:
+                          memory: 2Gi
                       instance:
                         domain: frontend
                         protocol: http
