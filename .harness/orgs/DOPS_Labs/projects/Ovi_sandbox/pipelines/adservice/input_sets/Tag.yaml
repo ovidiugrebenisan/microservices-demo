@@ -1,0 +1,23 @@
+inputSet:
+  name: Tag
+  identifier: Tag
+  orgIdentifier: DOPS_Labs
+  projectIdentifier: Ovi_sandbox
+  pipeline:
+    identifier: adservice
+    template:
+      templateInputs:
+        properties:
+          ci:
+            codebase:
+              build:
+                type: tag
+                spec:
+                  tag: <+trigger.tag>
+        variables:
+          - name: language
+            type: String
+            value: java
+          - name: service_name
+            type: String
+            value: adservice
